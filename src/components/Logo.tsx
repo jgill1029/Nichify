@@ -1,20 +1,11 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Flex } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const Logo = () => {
-  const location = useLocation();
-  const isLogin = location.pathname === "/login";
-  const isDashboard = location.pathname === "/dashboard";
-
   return (
-    <>
-      <Link to="/login" className={isLogin ? "active" : ""}>
-        Nichify
-      </Link>
-      <Link to="/dashboard" className={isDashboard ? "active" : ""}>
-        <img src="/logo.png" alt="Logo" />
-      </Link>
-    </>
+    <Flex fontSize="2.3rem">
+      <Link to="/login">Nichify</Link>
+    </Flex>
   );
 };
 
