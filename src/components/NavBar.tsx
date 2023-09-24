@@ -4,7 +4,7 @@ import Logo from "./Logo";
 
 const NavBar = () => {
   return (
-    <Flex padding=".5rem" gap="1rem" fontSize="1.5rem">
+    <Flex padding="1rem" gap="1rem" fontSize="1.5rem">
       <Logo />
       <Flex gap=".5rem" alignItems="center" paddingY=".7rem">
         <Link to="/dashboard">Dashboard</Link>

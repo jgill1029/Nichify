@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Logo = () => {
   return (
-    <Flex fontSize="2.3rem">
+    <Flex fontSize="2.3rem" textColor="#1db954">
       <Link to="/login">Nichify</Link>
     </Flex>
   );

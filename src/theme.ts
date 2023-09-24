@@ -9,7 +9,7 @@ const theme = extendTheme({
     styles: {
         global: () => ({
             body: {
-                bg: '#131313'
+                bg: '#191414'
             },
             fonts: {
                 
