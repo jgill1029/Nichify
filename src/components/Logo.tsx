@@ -1,10 +1,12 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 const Logo = () => {
   return (
-    <Flex textColor="#1db954" margin="10px">
-      <Link to="/login">Nichify</Link>
+    <Flex textColor="#1db954">
+      <Link to="/login">
+        <Heading>Nichify</Heading>
+      </Link>
     </Flex>
   );
 };
