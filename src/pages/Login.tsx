@@ -4,7 +4,9 @@ const Login = () => {
   return (
     <>
       <Center paddingY="8em">
-        <Heading fontSize="4em">How Mainstream is your Music Taste?</Heading>
+        <Heading textAlign="center" fontSize={{ base: "2em", sm: "4em" }}>
+          How Mainstream is your Music Taste?
+        </Heading>
       </Center>
       <Flex
         align="center"
