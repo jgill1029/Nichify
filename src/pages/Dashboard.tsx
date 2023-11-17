@@ -1,8 +1,7 @@
-import { Card, Center, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Card, Grid, GridItem, Heading } from "@chakra-ui/react";
 import CardContainer from "../components/CardContainer";
-import NicheRating from "../components/NicheRating";
 import CardTemplate from "../components/CardTemplate";
-import BigRating from "../components/BigRating";
+import Meter from "../components/Meter";
 
 const Dashboard = () => {
   const artists = [1, 2, 3, 4, 5];
@@ -19,10 +18,7 @@ const Dashboard = () => {
       }}
     >
       <GridItem area="meter" paddingX={5}>
-        <Center>
-          <BigRating rating={20} label="Average" />
-        </Center>
-        <NicheRating rating={20} />
+        <Meter rating={20}></Meter>
       </GridItem>
       <GridItem area="artists">
         <CardContainer>
@@ -32,7 +28,7 @@ const Dashboard = () => {
             </Heading>
             {artists.map((artist) => (
               <CardContainer key={artist}>
-                <CardTemplate rating={40} />
+                <CardTemplate rating={40} color="#191414" />
               </CardContainer>
             ))}
           </Card>
@@ -46,7 +42,7 @@ const Dashboard = () => {
             </Heading>
             {artists.map((artist) => (
               <CardContainer key={artist}>
-                <CardTemplate rating={40} />
+                <CardTemplate rating={40} color="#191414" />
               </CardContainer>
             ))}
           </Card>

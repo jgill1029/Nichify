@@ -17,9 +17,10 @@ import RatingBox from "./RatingBox";
 
 interface Props {
   rating: number;
+  color: string;
 }
 
-const CardTemplate = ({ rating }: Props) => {
+const CardTemplate = ({ rating, color }: Props) => {
   const genres = ["Rap", "R&B"];
 
   const getLabelFromRating = (rating: number) => {
@@ -41,41 +42,39 @@ const CardTemplate = ({ rating }: Props) => {
   };
 
   return (
-    <>
-      <Card background="#191414" direction={{ base: "column", sm: "row" }}>
-        <Image src={drake} boxSize={{ base: "100%", sm: "200px" }}></Image>
+    <Card background={color} direction={{ base: "column", sm: "row" }}>
+      <Image src={drake} boxSize={{ base: "100%", sm: "200px" }}></Image>
 
-        <CardBody>
-          <HStack justifyContent={"space-between"}>
-            <Heading>Artist/Song Name</Heading>
-            <Hide below="sm">
-              <Text fontSize="2vh">{getLabelFromRating(rating)}</Text>
-            </Hide>
-          </HStack>
-
-          <HStack justifyContent="space-between">
-            <VStack align="flex-start">
-              <Show>Artist</Show>
-              <Box mt={{ base: "0", md: "9" }}>
-                <Text>
-                  Genres:{" "}
-                  {genres.map((genre, index) => (
-                    <span>{(index ? ", " : "") + genre}</span>
-                  ))}
-                </Text>
-              </Box>
-            </VStack>
-            <Show below="sm">
-              <RatingBox rating={rating} />
-            </Show>
-          </HStack>
-
+      <CardBody>
+        <HStack justifyContent={"space-between"}>
+          <Heading>Artist/Song Name</Heading>
           <Hide below="sm">
-            <NicheRating rating={rating} />
+            <Text fontSize="2vh">{getLabelFromRating(rating)}</Text>
           </Hide>
-        </CardBody>
-      </Card>
-    </>
+        </HStack>
+
+        <HStack justifyContent="space-between">
+          <VStack align="flex-start">
+            <Show>Artist</Show>
+            <Box mt={{ base: "0", md: "9" }}>
+              <Text>
+                Genres:{" "}
+                {genres.map((genre, index) => (
+                  <span>{(index ? ", " : "") + genre}</span>
+                ))}
+              </Text>
+            </Box>
+          </VStack>
+          <Show below="sm">
+            <RatingBox rating={rating} />
+          </Show>
+        </HStack>
+
+        <Hide below="sm">
+          <NicheRating rating={rating} />
+        </Hide>
+      </CardBody>
+    </Card>
   );
 };
 
