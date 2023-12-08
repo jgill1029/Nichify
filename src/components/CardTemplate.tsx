@@ -42,7 +42,11 @@ const CardTemplate = ({ rating, color }: Props) => {
   };
 
   return (
-    <Card background={color} direction={{ base: "column", sm: "row" }}>
+    <Card
+      key="ArtistName"
+      background={color}
+      direction={{ base: "column", sm: "row" }}
+    >
       <Image src={drake} boxSize={{ base: "100%", sm: "200px" }}></Image>
 
       <CardBody>
