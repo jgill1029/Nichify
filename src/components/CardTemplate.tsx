@@ -10,18 +10,24 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
-import drake from "../assets/drake.jpg";
 import NicheRating from "./NicheRating";
 import RatingBox from "./RatingBox";
+import { Song } from "../hooks/useSongs";
+import { Artist } from "../hooks/useArtists";
 
 interface Props {
-  rating: number;
   color: string;
+  song?: Song;
+  artist?: Artist;
 }
 
-const CardTemplate = ({ rating, color }: Props) => {
-  const genres = ["Rap", "R&B"];
+const CardTemplate = ({ color, song, artist }: Props) => {
+  const key = song ? song.id : artist ? artist.id : "key";
+  const image = song ? song?.album.images[0].url : artist ? artist.images : "";
+  const rating = song ? song.popularity : artist ? artist.popularity : 100;
+  const genres = artist ? artist.genres : [];
+  const name = song ? song.name : artist ? artist.name : "";
+  const filteredSongName = name.replace(/\([^)]*\)/, "").trim();
 
   const getLabelFromRating = (rating: number) => {
     // Define rating ranges and corresponding labels
@@ -43,39 +49,54 @@ const CardTemplate = ({ rating, color }: Props) => {
 
   return (
     <Card
-      key="ArtistName"
+      key={key}
       background={color}
       direction={{ base: "column", sm: "row" }}
     >
-      <Image src={drake} boxSize={{ base: "100%", sm: "200px" }}></Image>
+      <Image src={image} boxSize={{ base: "100%", sm: "200px" }}></Image>
 
       <CardBody>
         <HStack justifyContent={"space-between"}>
-          <Heading>Artist/Song Name</Heading>
+          <Heading>{filteredSongName}</Heading>
           <Hide below="sm">
-            <Text fontSize="2vh">{getLabelFromRating(rating)}</Text>
+            <Text fontSize="2vh">{getLabelFromRating(rating || 0)}</Text>
           </Hide>
         </HStack>
 
         <HStack justifyContent="space-between">
           <VStack align="flex-start">
-            <Show>Artist</Show>
-            <Box mt={{ base: "0", md: "9" }}>
-              <Text>
-                Genres:{" "}
-                {genres.map((genre, index) => (
-                  <span>{(index ? ", " : "") + genre}</span>
-                ))}
+            {song && (
+              <Text color="white">
+                {song.artists &&
+                  song.artists.map((artists: Artist, index) => (
+                    <span key={artists?.id}>
+                      {index ? ", " : ""} {artists?.name}
+                    </span>
+                  ))}
               </Text>
+            )}
+            <Box mt={{ base: "0", md: "9" }}>
+              {artist && (
+                <Text color="white">
+                  Genres:{" "}
+                  {genres &&
+                    genres.map((genre, index) => (
+                      <Text key={genre}>
+                        {index ? ", " : ""} {genre}
+                      </Text>
+                    ))}
+                </Text>
+              )}
+              <Text color={color}> Hi </Text>
             </Box>
           </VStack>
           <Show below="sm">
-            <RatingBox rating={rating} />
+            <RatingBox rating={rating || 0} />
           </Show>
         </HStack>
 
         <Hide below="sm">
-          <NicheRating rating={rating} />
+          <NicheRating rating={rating || 0} />
         </Hide>
       </CardBody>
     </Card>

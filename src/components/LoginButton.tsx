@@ -17,7 +17,7 @@ const LoginButton: React.FC = () => {
 
         if (success) {
           // Redirect to the home page or desired route
-          window.location.href = "/";
+          window.location.href = "/dashboard";
         } else {
           // Handle authentication failure
           console.error("Authentication failed");

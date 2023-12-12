@@ -8,7 +8,6 @@ import {
   Text,
   Show,
 } from "@chakra-ui/react";
-import React from "react";
 import drake from "../assets/drake.jpg";
 import RatingBox from "./RatingBox";
 

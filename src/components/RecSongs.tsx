@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CardContainer from "./CardContainer";
 import CardTemplate from "./CardTemplate";
 import SmallCard from "./SmallCard";

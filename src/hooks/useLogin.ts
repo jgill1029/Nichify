@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-interface TokenResponse {
+export interface TokenResponse {
   access_token: string;
   refresh_token: string;
 }
 
-const clientId = 'cf25a6083da241a8b72d8062c11e96dd';
-const redirectUri = 'http://localhost:5173/dashboard';
-const tokenEndpoint = 'your-token-endpoint';
+const clientId: string = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_ID!;
+const redirectUri: string = import.meta.env.VITE_REACT_APP_SPOTIFY_REDIRECT_URI!;
+const tokenEndpoint: string = 'https://accounts.spotify.com/api/token';
+const client_secret: string = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_SECRET!;
 const scopes = [ 'user-read-email', 'user-top-read'];
 
 export const getAuthUrl = (): string => {
@@ -20,12 +21,17 @@ export const getAuthUrl = (): string => {
 
 export const handleAuthentication = async (code: string): Promise<boolean> => {
   try {
-    const response = await axios.post<TokenResponse>(tokenEndpoint, {
-      code,
-      redirect_uri: redirectUri,
-      client_id: clientId,
-      client_secret: "client scret",
-      grant_type: 'authorization_code',
+    const params = new URLSearchParams();
+    params.append('code', code);
+    params.append('redirect_uri', redirectUri);
+    params.append('client_id', clientId);
+    params.append('client_secret', client_secret);
+    params.append('grant_type', 'authorization_code');
+
+    const response = await axios.post<TokenResponse>(tokenEndpoint, params, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
 
     const { access_token, refresh_token } = response.data;

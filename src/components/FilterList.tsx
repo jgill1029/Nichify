@@ -1,5 +1,4 @@
 import { Button, Heading, List, ListItem } from "@chakra-ui/react";
-import React from "react";
 
 const FilterList = () => {
   const genres = ["Rap", "Pop", "Country"];

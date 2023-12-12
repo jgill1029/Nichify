@@ -1,9 +1,4 @@
-import { Card, Center, Grid, GridItem, Heading, Show } from "@chakra-ui/react";
-import React from "react";
-import BigRating from "../components/BigRating";
-import NicheRating from "../components/NicheRating";
-import CardContainer from "../components/CardContainer";
-import CardTemplate from "../components/CardTemplate";
+import { Grid, GridItem, Show } from "@chakra-ui/react";
 import Meter from "../components/Meter";
 import FilterList from "../components/FilterList";
 import FilterListSmall from "../components/FilterListSmall";
