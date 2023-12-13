@@ -5,16 +5,44 @@ import Meter from "../components/Meter";
 import TimeRange from "../components/TimeRange";
 import { useState } from "react";
 import useSongs, { Song } from "../hooks/useSongs";
+import useArtists, { Artist } from "../hooks/useArtists";
 
 const Dashboard = () => {
-  const artists = [1, 2, 3, 4, 5];
   const [timeRange, setTimeRange] = useState("long_term");
   const cardBackgrounColor = "#1db954";
   const cardColor = "#191414";
   const headingColor = "#ffffff";
 
-  const { data, error, isLoading } = useSongs(timeRange);
-  const songs: Song[] = data;
+  const {
+    data: songData,
+    error: songError,
+    isLoading: songIsLoading,
+  } = useSongs(timeRange);
+  const songs: Song[] = songData;
+
+  const {
+    data: artistData,
+    error: artistError,
+    isLoading: artistIsLoading,
+  } = useArtists(timeRange);
+  const artists: Artist[] = artistData;
+
+  const overallRating = () => {
+    let sum = 0;
+    let num = 0;
+
+    songData.forEach((song: Song) => {
+      sum += 100 - song.popularity;
+      num += 1;
+    });
+
+    artistData.forEach((artist: Artist) => {
+      sum += 100 - (artist?.popularity || 0);
+      num += 1;
+    });
+
+    return Math.round(sum / num);
+  };
 
   return (
     <Grid
@@ -28,7 +56,7 @@ const Dashboard = () => {
       }}
     >
       <GridItem area="meter" paddingX={5}>
-        <Meter rating={20}></Meter>
+        <Meter rating={overallRating()}></Meter>
         <TimeRange
           onSelectTime={(time) => setTimeRange(time)}
           selectedTime={timeRange}
@@ -41,14 +69,20 @@ const Dashboard = () => {
             <Heading color={headingColor} mx="auto">
               Top Artists
             </Heading>
-            {artists.map((artist) => (
-              <CardContainer key={artist}>
-                <CardTemplate key={artist} color={cardColor} />
-              </CardContainer>
-            ))}
+            {artists &&
+              artists.map((artist) => (
+                <CardContainer key={artist?.id}>
+                  <CardTemplate
+                    key={artist?.id}
+                    color={cardColor}
+                    artist={artist}
+                  />
+                </CardContainer>
+              ))}
           </Card>
         </CardContainer>
       </GridItem>
+
       <GridItem area="songs">
         <CardContainer>
           <Card background={cardBackgrounColor}>

@@ -4,9 +4,7 @@ import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { TokenResponse } from "./useLogin";
 
 export interface FetchResponse<T>{
-    href: string
     items: T[]
-    limit: number
 }
 
 const useData = <T>(endpoint: string, requestConfig?: AxiosRequestConfig, deps?: any[]) => {

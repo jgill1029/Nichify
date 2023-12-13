@@ -1,9 +1,26 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 
-const FilterListSmall = () => {
-  const genres = ["Personalized", "Rap", "Country", "Pop"];
-  const selectedGenre = "Personalized";
+interface Props {
+  onSelectGenre: (genre: string) => void;
+  selectedGenre: string | "";
+}
+
+const Genres = [
+  { value: "short_term", label: "Personalized" },
+  { value: "pop", label: "Pop" },
+  { value: "rock", label: "Rock" },
+  { value: "hip-hop", label: "Hip-Hop" },
+  { value: "r-n-b", label: "R&B" },
+  { value: "edm", label: "EDM" },
+  { value: "country", label: "Country" },
+  { value: "jazz", label: "Jazz" },
+  { value: "reggae", label: "reggae" },
+  { value: "latin", label: "Latin" },
+];
+
+const FilterListSmall = ({ onSelectGenre, selectedGenre }: Props) => {
+  const currentGenre = Genres.find((genre) => genre.value === selectedGenre);
 
   return (
     <Menu>
@@ -13,11 +30,16 @@ const FilterListSmall = () => {
         rightIcon={<ChevronDownIcon />}
         variant="outline"
       >
-        {selectedGenre}
+        {currentGenre?.value}
       </MenuButton>
       <MenuList>
-        {genres.map((genre) => (
-          <MenuItem key={genre}>{genre}</MenuItem>
+        {Genres.map((genre) => (
+          <MenuItem
+            key={genre.value}
+            onClick={() => onSelectGenre(genre.value)}
+          >
+            {genre.label}
+          </MenuItem>
         ))}
       </MenuList>
     </Menu>

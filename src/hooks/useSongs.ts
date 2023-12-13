@@ -10,7 +10,7 @@ interface Album {
     images: images[]
 }
 
-interface images {
+export interface images {
     url: string
 }
 
@@ -29,6 +29,6 @@ const useSongs = (time_range : string) => {
   params.append('time_range', time_range);
 
   return useData<Song>('/me/top/tracks',{params},[time_range]
-  )}
+)}
 
 export default useSongs;

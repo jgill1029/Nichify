@@ -14,7 +14,15 @@ interface Props {
 }
 
 const TimeRange = ({ onSelectTime, selectedTime }: Props) => {
-  const timeRange = ["short_term", "medium_term", "long_term"];
+  const timeRanges = [
+    { value: "short_term", label: "Recent" },
+    { value: "medium_term", label: "Intermediate" },
+    { value: "long_term", label: "All Time" },
+  ];
+
+  const currentTimeRange = timeRanges.find(
+    (time) => time.value === selectedTime
+  );
 
   return (
     <Flex marginTop={2}>
@@ -25,12 +33,12 @@ const TimeRange = ({ onSelectTime, selectedTime }: Props) => {
           rightIcon={<ChevronDownIcon />}
           variant="outline"
         >
-          {selectedTime}
+          {currentTimeRange?.label}
         </MenuButton>
         <MenuList>
-          {timeRange.map((time) => (
-            <MenuItem key={time} onClick={() => onSelectTime(time)}>
-              {time}
+          {timeRanges.map((time) => (
+            <MenuItem key={time.value} onClick={() => onSelectTime(time.value)}>
+              {time.label}
             </MenuItem>
           ))}
         </MenuList>

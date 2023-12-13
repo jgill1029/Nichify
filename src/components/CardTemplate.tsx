@@ -22,14 +22,15 @@ interface Props {
 }
 
 const CardTemplate = ({ color, song, artist }: Props) => {
-  const key = song ? song.id : artist ? artist.id : "key";
-  const image = song ? song?.album.images[0].url : artist ? artist.images : "";
-  const rating = song ? song.popularity : artist ? artist.popularity : 100;
-  const genres = artist ? artist.genres : [];
-  const name = song ? song.name : artist ? artist.name : "";
+  const key = song?.id || artist?.id || "key";
+  const image = song?.album.images[0]?.url || artist?.images[0]?.url || "";
+  const rating = song?.popularity || artist?.popularity || 0;
+  const genres = artist?.genres || [];
+  const name = song?.name || artist?.name || "";
   const filteredSongName = name.replace(/\([^)]*\)/, "").trim();
+  const objectRating = 100 - rating;
 
-  const getLabelFromRating = (rating: number) => {
+  const getLabelFromRating = (objectRating: number) => {
     // Define rating ranges and corresponding labels
     const ratingRanges = [0, 20, 40, 60, 80, 100];
     const labels = [
@@ -41,7 +42,10 @@ const CardTemplate = ({ color, song, artist }: Props) => {
     ];
 
     for (let i = 0; i < ratingRanges.length - 1; i++) {
-      if (rating >= ratingRanges[i] && rating < ratingRanges[i + 1]) {
+      if (
+        objectRating >= ratingRanges[i] &&
+        objectRating < ratingRanges[i + 1]
+      ) {
         return labels[i];
       }
     }
@@ -59,7 +63,7 @@ const CardTemplate = ({ color, song, artist }: Props) => {
         <HStack justifyContent={"space-between"}>
           <Heading>{filteredSongName}</Heading>
           <Hide below="sm">
-            <Text fontSize="2vh">{getLabelFromRating(rating || 0)}</Text>
+            <Text fontSize="2vh">{getLabelFromRating(objectRating)}</Text>
           </Hide>
         </HStack>
 
@@ -75,28 +79,29 @@ const CardTemplate = ({ color, song, artist }: Props) => {
                   ))}
               </Text>
             )}
+            {artist && genres?.length <= 3 && <Text color={color}> Hi </Text>}
             <Box mt={{ base: "0", md: "9" }}>
               {artist && (
                 <Text color="white">
                   Genres:{" "}
                   {genres &&
                     genres.map((genre, index) => (
-                      <Text key={genre}>
+                      <span key={genre}>
                         {index ? ", " : ""} {genre}
-                      </Text>
+                      </span>
                     ))}
                 </Text>
               )}
-              <Text color={color}> Hi </Text>
+              {song && <Text color={color}> Hi </Text>}
             </Box>
           </VStack>
           <Show below="sm">
-            <RatingBox rating={rating || 0} />
+            <RatingBox rating={objectRating} />
           </Show>
         </HStack>
 
         <Hide below="sm">
-          <NicheRating rating={rating || 0} />
+          <NicheRating rating={objectRating} />
         </Hide>
       </CardBody>
     </Card>

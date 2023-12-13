@@ -1,33 +1,36 @@
 import { Grid, GridItem, Show } from "@chakra-ui/react";
-import Meter from "../components/Meter";
 import FilterList from "../components/FilterList";
 import FilterListSmall from "../components/FilterListSmall";
 import RecSongs from "../components/RecSongs";
+import { useState } from "react";
 
 const Recommendations = () => {
-  const recSongs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  const [genre, setGenre] = useState("long_term");
+  const recSongs = [1, 2];
 
   return (
     <Grid
       templateAreas={{
-        base: `"meter" "filters" "RecSongs"`,
-        lg: `"meter meter" "filters RecSongs"`,
+        base: `"filters" "RecSongs"`,
+        lg: `"filters RecSongs"`,
       }}
       templateColumns={{
         base: "1fr",
         lg: "150px 1fr",
       }}
     >
-      <GridItem area="meter" paddingX={5}>
-        <Meter rating={20}></Meter>
-      </GridItem>
-
       <GridItem area="filters" paddingX={5} mt={4}>
         <Show above="lg">
-          <FilterList />
+          <FilterList
+            onSelectGenre={(time) => setGenre(time)}
+            selectedGenre={genre}
+          />
         </Show>
         <Show below="md">
-          <FilterListSmall />
+          <FilterListSmall
+            onSelectGenre={(time) => setGenre(time)}
+            selectedGenre={genre}
+          />
         </Show>
       </GridItem>
 
