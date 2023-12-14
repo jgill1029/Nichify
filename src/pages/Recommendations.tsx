@@ -3,10 +3,13 @@ import FilterList from "../components/FilterList";
 import FilterListSmall from "../components/FilterListSmall";
 import RecSongs from "../components/RecSongs";
 import { useState } from "react";
+import useRecommendations from "../hooks/useRecommendations";
 
 const Recommendations = () => {
-  const [genre, setGenre] = useState("long_term");
-  const recSongs = [1, 2];
+  const [genre, setGenre] = useState("personalized");
+
+  const { data } = useRecommendations(genre);
+  const recSongs = data;
 
   return (
     <Grid
@@ -22,13 +25,13 @@ const Recommendations = () => {
       <GridItem area="filters" paddingX={5} mt={4}>
         <Show above="lg">
           <FilterList
-            onSelectGenre={(time) => setGenre(time)}
+            onSelectGenre={(genre) => setGenre(genre)}
             selectedGenre={genre}
           />
         </Show>
         <Show below="md">
           <FilterListSmall
-            onSelectGenre={(time) => setGenre(time)}
+            onSelectGenre={(genre) => setGenre(genre)}
             selectedGenre={genre}
           />
         </Show>

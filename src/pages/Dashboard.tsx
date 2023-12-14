@@ -13,18 +13,11 @@ const Dashboard = () => {
   const cardColor = "#191414";
   const headingColor = "#ffffff";
 
-  const {
-    data: songData,
-    error: songError,
-    isLoading: songIsLoading,
-  } = useSongs(timeRange);
+  const { data: songData } = useSongs(timeRange);
   const songs: Song[] = songData;
+  localStorage.setItem("topSongs", JSON.stringify(songs));
 
-  const {
-    data: artistData,
-    error: artistError,
-    isLoading: artistIsLoading,
-  } = useArtists(timeRange);
+  const { data: artistData } = useArtists(timeRange);
   const artists: Artist[] = artistData;
 
   const overallRating = () => {

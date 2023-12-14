@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Genres = [
-  { value: "short_term", label: "Personalized" },
+  { value: "personalized", label: "Personalized" },
   { value: "pop", label: "Pop" },
   { value: "rock", label: "Rock" },
   { value: "hip-hop", label: "Hip-Hop" },
@@ -19,6 +19,8 @@ const Genres = [
 ];
 
 const FilterList = ({ onSelectGenre, selectedGenre }: Props) => {
+  const currentGenre = Genres.find((genre) => genre.value === selectedGenre);
+
   return (
     <>
       <Heading fontSize="2xl" marginBottom={2}>
@@ -29,9 +31,15 @@ const FilterList = ({ onSelectGenre, selectedGenre }: Props) => {
           <ListItem
             key={genre.label}
             paddingY="5px"
-            onClick={() => onSelectGenre(genre.label)}
+            onClick={() => onSelectGenre(genre.value)}
           >
-            <Button>{genre.label}</Button>
+            <Button
+              variant={
+                genre.value === currentGenre?.value ? "solid" : "outline"
+              }
+            >
+              {genre.label}
+            </Button>
           </ListItem>
         ))}
       </List>

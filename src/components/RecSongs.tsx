@@ -1,11 +1,13 @@
 import { useState } from "react";
 import CardContainer from "./CardContainer";
 import CardTemplate from "./CardTemplate";
-import SmallCard from "./SmallCard";
+
 import { Button } from "@chakra-ui/react";
+import { Song } from "../hooks/useSongs";
+import SmallCard from "./smallcard";
 
 interface props {
-  songs: number[];
+  songs: Song[];
 }
 
 const RecSongs = ({ songs }: props) => {
@@ -18,13 +20,13 @@ const RecSongs = ({ songs }: props) => {
   return (
     <>
       {songs.slice(0, 5).map((song) => (
-        <CardContainer key={song}>
-          <CardTemplate rating={40} color="#1db954" />
+        <CardContainer key={song.id}>
+          <CardTemplate song={song} color="#1db954" />
         </CardContainer>
       ))}
       {songs.slice(5, itemsToShow).map((lsong) => (
-        <CardContainer key={lsong}>
-          <SmallCard color="#1db954" rating={20}></SmallCard>
+        <CardContainer key={lsong.id}>
+          <SmallCard color="#1db954" song={lsong}></SmallCard>
         </CardContainer>
       ))}
       {itemsToShow < songs.length && (

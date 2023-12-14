@@ -8,29 +8,32 @@ import {
   Text,
   Show,
 } from "@chakra-ui/react";
-import drake from "../assets/drake.jpg";
 import RatingBox from "./RatingBox";
+import { Song } from "../hooks/useSongs";
 
 interface props {
-  rating: number;
+  song: Song;
   color: string;
 }
 
-const SmallCard = ({ rating, color }: props) => {
+const SmallCard = ({ song, color }: props) => {
   return (
     <Card background={color} direction="row">
-      <Image src={drake} boxSize={{ base: "100px", sm: "120px" }}></Image>
+      <Image
+        src={song?.album.images[0]?.url}
+        boxSize={{ base: "100px", sm: "120px" }}
+      ></Image>
 
       <CardBody>
         <HStack justifyContent={"space-between"}>
           <VStack alignItems={"right"}>
-            <Heading size={{ base: "md", md: "lg" }}>Song Name</Heading>
+            <Heading size={{ base: "md", md: "lg" }}>{song.name}</Heading>
             <Show above="sm">
-              <Text fontSize={"lg"}>Artist</Text>
+              <Text fontSize={"lg"}>{song.artists[0].name}</Text>
             </Show>
           </VStack>
           <Show above="sm">
-            <RatingBox rating={rating} />
+            <RatingBox rating={song.popularity} />
           </Show>
         </HStack>
       </CardBody>
